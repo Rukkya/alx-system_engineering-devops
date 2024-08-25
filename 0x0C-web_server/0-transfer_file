@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#checking cmd args
+
+if [ $# -lt 4 ]
+then
+    echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    exit 1
+fi
+
+path=$1
+ip=$2
+usr=$3
+sshkey=$4
+
+#disabling strict hostkey checking
+
+scp -o "StrictHostKeyChecking=no" -i "$sshkey" "$path" "$usr@$ip:~/"
+
+if [ $? -eq 0 ]
+then
+    echo "File Was Transfeered successfully"
+else
+    echo "failed to transfer the file"
+fi
